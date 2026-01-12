@@ -1,0 +1,33 @@
+import math
+import numpy as np
+
+# Parametri robot
+L1 = 0.6  # m
+L2 = 0.4  # m
+
+# Unghiuri (grade)
+theta1 = 35
+theta2 = 25
+
+# Viteze unghiulare (rad/s)
+theta_dot = np.array([0.5, 0.3])
+
+# Conversie in radiani
+t1 = math.radians(theta1)
+t2 = math.radians(theta2)
+
+# Cinematica directa
+x = L1 * math.cos(t1) + L2 * math.cos(t1 + t2)
+y = L1 * math.sin(t1) + L2 * math.sin(t1 + t2)
+
+# Jacobian
+J = np.array([
+    [-L1*math.sin(t1) - L2*math.sin(t1+t2), -L2*math.sin(t1+t2)],
+    [ L1*math.cos(t1) + L2*math.cos(t1+t2),  L2*math.cos(t1+t2)]
+])
+
+# Viteza efectorului final
+v = J @ theta_dot
+
+print(f"Pozitie: x={x:.3f} m, y={y:.3f} m")
+print(f"Viteza efector: vx={v[0]:.3f} m/s, vy={v[1]:.3f} m/s")
