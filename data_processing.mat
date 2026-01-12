@@ -1,0 +1,19 @@
+% Date senzor (ex: temperatura)
+data = [20.1 20.3 20.2 25.0 20.4 20.3 20.2];
+
+% Medie mobila
+window = 3;
+moving_avg = movmean(data, window);
+
+% Detectare anomalii (Z-score)
+mean_val = mean(data);
+std_val = std(data);
+z_scores = (data - mean_val) / std_val;
+
+anomalies = data(abs(z_scores) > 2);
+
+disp('Medie mobila:');
+disp(moving_avg);
+
+disp('Valori anormale:');
+disp(anomalies);
