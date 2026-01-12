@@ -1,0 +1,28 @@
+% Parametri robot
+L1 = 0.6;   % [m]
+L2 = 0.4;   % [m]
+
+% Unghiuri articulatii (grade)
+theta1 = 35;
+theta2 = 25;
+
+% Viteze unghiulare (rad/s)
+theta_dot = [0.5; 0.3];
+
+% Conversie in radiani
+t1 = deg2rad(theta1);
+t2 = deg2rad(theta2);
+
+% Cinematica directa
+x = L1*cos(t1) + L2*cos(t1 + t2);
+y = L1*sin(t1) + L2*sin(t1 + t2);
+
+% Jacobian
+J = [ -L1*sin(t1) - L2*sin(t1+t2),  -L2*sin(t1+t2);
+       L1*cos(t1) + L2*cos(t1+t2),   L2*cos(t1+t2) ];
+
+% Viteza efectorului final
+v = J * theta_dot;
+
+fprintf('Pozitie efector: x = %.3f m, y = %.3f m\n', x, y);
+fprintf('Viteza efector: vx = %.3f m/s, vy = %.3f m/s\n', v(1), v(2));
